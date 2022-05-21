@@ -88,10 +88,18 @@
       (is (= (:climbs result) expected-climbs)))))
 
 (deftest unlucky-roll-test
-  (testing "Given a board with snakes 
+  (testing "Given a board with a snake 
             when the roll lands on a snake
             we keep track of the unlucky roll"
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
           result  (make-move game-state board 3)]
-      (is (= (:unlucky-rolls result) 1)))))
+      (is (= (:unlucky-rolls result) 1))))
+    (testing "Given a board with two snakes 
+            when the roll lands on a snake twice
+            we keep track of the unlucky rolls"
+      (let [board (initialise-board [[4 1] [5 2]] [[3 6]])
+            game-state initial-game-state
+            result  (-> (make-move game-state board 3)
+                        (make-move board 4))]
+        (is (= (:unlucky-rolls result) 2)))))
