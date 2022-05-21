@@ -13,7 +13,7 @@
             when you initialise the board
             you get a configured board with a snake"
     (let [snakes [[2 1]]
-          ladders [[]]
+          ladders []
           result (initialise-board snakes ladders)]
       (is (= 100 (count result)))
       (is (= (nth result 2) {:snake [2 1]}))))
@@ -21,10 +21,19 @@
             when you initialise the board
             you get a configured board with 2 snakes"
     (let [snakes [[2 1] [4 3]]
-          ladders [[]]
+          ladders []
           result (initialise-board snakes ladders)]
       (is (= 100 (count result)))
       (is (= (nth result 2) {:snake [2 1]}))
-      (is (= (nth result 4) {:snake [4 3]})))))
+      (is (= (nth result 4) {:snake [4 3]}))))
+  (testing "given a list of snakes with 1 ladder and 1 snake
+            when you initialise the board
+            you get a configured board with a ladder"
+    (let [snakes [[4 3]]
+          ladders [[2 5]]
+          result (initialise-board snakes ladders)]
+      (is (= 100 (count result)))
+      (is (= (nth result 4) {:snake [4 3]}))
+      (is (= (nth result 2) {:ladder [2 5]})))))
 
 
