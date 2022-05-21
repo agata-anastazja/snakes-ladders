@@ -95,14 +95,14 @@
           game-state initial-game-state
           result  (make-move game-state board 3)]
       (is (= (:unlucky-rolls result) 1))))
-    (testing "Given a board with two snakes 
+  (testing "Given a board with two snakes 
             when the roll lands on a snake twice
             we keep track of the unlucky rolls"
-      (let [board (initialise-board [[4 1] [5 2]] [[3 6]])
-            game-state initial-game-state
-            result  (-> (make-move game-state board 3)
-                        (make-move board 4))]
-        (is (= (:unlucky-rolls result) 2)))))
+    (let [board (initialise-board [[4 1] [5 2]] [[3 6]])
+          game-state initial-game-state
+          result  (-> (make-move game-state board 3)
+                      (make-move board 4))]
+      (is (= (:unlucky-rolls result) 2)))))
 
 (deftest lucky-roll-test
   (testing "Given a board with a ladder 
@@ -112,10 +112,11 @@
           game-state initial-game-state
           result  (make-move game-state board 2)]
       (is (= (:lucky-rolls result) 1))))
-  (testing "Given a board with a ladder 
-            when the roll lands one step away from snake
+  (testing "Given a board with a snake 
+            when the roll lands one tile after the snake
             we keep track of the lucky roll"
     (let [board (initialise-board [[4 1]] [[5 6]])
           game-state initial-game-state
           result  (make-move game-state board 2)]
-      (is (= (:lucky-rolls result) 1)))))
+      (is (= (:lucky-rolls result) 1))))
+  )

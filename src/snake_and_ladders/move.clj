@@ -1,5 +1,5 @@
 (ns snake-and-ladders.move
-  (:require [snake-and-ladders.board :refer [find-snakes]]))
+  (:require [snake-and-ladders.board :refer [find-snakes find-modifier-entrypoints]]))
 
 (defn update-turns [previous-turns roll]
   (let [last-turn (last previous-turns)
@@ -8,18 +8,16 @@
       (conj (drop-last previous-turns) (conj last-turn roll))
       (conj previous-turns [roll]))))
 
-(defn distance-from-nearest-snakes-two-or-less [tile snakes]
-  (if (not-empty snakes)
-    (let [snake-entry-points (map first snakes)
-          sorted-snake-entry-points (sort snake-entry-points)
-          snake-entry-after-selected-tile (first (filter (fn [x] (> x tile)) sorted-snake-entry-points))]
-      (and snake-entry-after-selected-tile (<= (- snake-entry-after-selected-tile tile) 2)))
+(defn distance-from-nearest-snakes-two-or-less [tile snake-entry-points]
+  (if (not-empty snake-entry-points)
+    (let [snake-entry-after-selected-tile (first (filter (fn [x] (> x tile)) snake-entry-points))]
+        (and snake-entry-after-selected-tile (<= (- snake-entry-after-selected-tile tile) 2)))
     false))
-
 
 (defn count-if-lucky-roll [state board]
   (let [snakes (find-snakes board)
-        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snakes)]
+        snake-entries (find-modifier-entrypoints snakes)
+        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snake-entries )]
     (if close-miss-snake
       (update-in state [:lucky-rolls] (fn [lucky-rolls-counter] (inc lucky-rolls-counter)))
       state)))

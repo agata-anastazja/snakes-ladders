@@ -24,7 +24,16 @@
 (defn find-snakes [board]
   (reduce (fn [acc {:keys [snake]}]
             (if (not-empty snake)
-              (conj acc snake) 
+              (conj acc snake)
               acc))
           []
           board))
+
+(defn find-modifier-entrypoints [modifiers]
+  (->>
+   modifiers
+   (map first)
+   sort))
+
+
+
