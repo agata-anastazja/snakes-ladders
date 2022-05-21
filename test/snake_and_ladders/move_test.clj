@@ -108,15 +108,22 @@
   (testing "Given a board with a ladder 
             when the roll lands on a ladder
             we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[3 6]])
+    (let [board (initialise-board [[6 1]] [[3 6]])
           game-state initial-game-state
           result  (make-move game-state board 2)]
       (is (= (:lucky-rolls result) 1))))
   (testing "Given a board with a snake 
-            when the roll lands one tile after the snake
+            when the roll lands one tile before the snake
             we keep track of the lucky roll"
     (let [board (initialise-board [[4 1]] [[5 6]])
           game-state initial-game-state
           result  (make-move game-state board 2)]
       (is (= (:lucky-rolls result) 1))))
-  )
+
+  (testing "Given a board with a snake 
+            when the roll lands one tile after the snake
+            we keep track of the lucky roll"
+    (let [board (initialise-board [[4 1]] [[10 16]])
+          game-state initial-game-state
+          result  (make-move game-state board 4)]
+      (is (= (:lucky-rolls result) 1)))))

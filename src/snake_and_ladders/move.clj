@@ -10,14 +10,16 @@
 
 (defn distance-from-nearest-snakes-two-or-less [tile snake-entry-points]
   (if (not-empty snake-entry-points)
-    (let [snake-entry-after-selected-tile (first (filter (fn [x] (> x tile)) snake-entry-points))]
-        (and snake-entry-after-selected-tile (<= (- snake-entry-after-selected-tile tile) 2)))
+    (let [snake-entry-after-selected-tile (first (filter (fn [x] (> x tile)) snake-entry-points))
+          snake-entry-before-selected-tile  (first (filter (fn [x] (< x tile)) snake-entry-points))]
+      (or (and snake-entry-after-selected-tile (<= (- snake-entry-after-selected-tile tile) 2))
+      (and snake-entry-before-selected-tile (<= (- tile snake-entry-before-selected-tile) 2))))
     false))
 
 (defn count-if-lucky-roll [state board]
   (let [snakes (find-snakes board)
         snake-entries (find-modifier-entrypoints snakes)
-        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snake-entries )]
+        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snake-entries)]
     (if close-miss-snake
       (update-in state [:lucky-rolls] (fn [lucky-rolls-counter] (inc lucky-rolls-counter)))
       state)))
