@@ -51,6 +51,14 @@
       (is (= (:current-position result) expected-position))
       (is (= (:turns result) expected-turns))))
   (testing "Given a board with snakes and ladders and a player on tile 1
+            when the roll landing on a snake that takes them to tile 1
+            we keep track of the slide"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          expected-slides [[4 1]]
+          result  (make-move game-state board 3)]
+      (is (= (:slides result) expected-slides))))
+  (testing "Given a board with snakes and ladders and a player on tile 1
             when the roll landing on a ladder that takes them to tile 1
             the player stays on tile 1 and keeps record of their turn"
     (let [board (initialise-board [[4 1]] [[3 6]])

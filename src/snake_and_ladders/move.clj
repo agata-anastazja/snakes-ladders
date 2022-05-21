@@ -7,17 +7,22 @@
       (conj (drop-last previous-turns) (conj last-turn roll))
       (conj previous-turns [roll]))))
 
-(defn apply-modifier [{:keys [snake ladder]}]
-  (or (second snake) (second ladder)))
+(defn apply-modifier [state {:keys [snake ladder]}]
+  (cond
+   snake (-> state
+             (update-in [:current-position] (fn [_] (second snake)))
+             (update-in [:slides]  (fn [previous-slides] (conj previous-slides snake))))
+    ladder (-> state
+              (update-in [:current-position] (fn [_] (second ladder))))))
 
-(defn update-position [previous-position board roll]
-  (let [tile (+ previous-position roll)
+(defn update-position [state board roll]
+  (let [tile (+ (:current-position state) roll)
         field-modifier (nth board tile)]
     (if (empty? field-modifier)
-      tile
-      (apply-modifier field-modifier))))
+      (update-in state [:current-position] (fn[_] tile))
+      (apply-modifier state field-modifier))))
 
 (defn make-move [state board roll]
   (->
-   (update-in state [:current-position] (fn [previous-position] (update-position previous-position board roll)))
+   (update-position state board roll)
    (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))))
