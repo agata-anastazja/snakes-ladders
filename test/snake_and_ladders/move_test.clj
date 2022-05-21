@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer :all]
    [snake-and-ladders.move :refer :all]
-   [snake-and-ladders.board :refer [initialise-empty-board]]
+   [snake-and-ladders.board :refer [initialise-empty-board initialise-board]]
    [snake-and-ladders.core :refer [initial-game-state]]))
 
 (deftest empty-board-roll-test
@@ -38,3 +38,15 @@
       (is (= (:turns (->
                       (make-move game-state board 6)
                       (make-move board 3))) expected-result))))) 
+
+(deftest snakes-and-ladders-board-roll-test
+  (testing "Given a board with snakes and ladders and a player on tile 1
+            when the roll landing on a snake that takes them to tile 1
+            the player stays on tile 1 and keeps record of their turn"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          expected-position 1
+          expected-turns [[3]]
+          result  (make-move game-state board 3)]
+      (is (= (:current-position result) expected-position))
+      (is (= (:turns result) expected-turns)))))

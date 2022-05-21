@@ -35,5 +35,3 @@
       (is (= 100 (count result)))
       (is (= (nth result 4) {:snake [4 3]}))
       (is (= (nth result 2) {:ladder [2 5]})))))
-
-
