@@ -1,2 +1,5 @@
-(ns snake-and-ladders.test-helper)
+(ns snake-and-ladders.test-helper
+  (:requ))
 
+(def snakes-and-ladders-board
+  (init))
