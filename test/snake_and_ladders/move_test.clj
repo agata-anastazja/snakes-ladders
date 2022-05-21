@@ -49,4 +49,14 @@
           expected-turns [[3]]
           result  (make-move game-state board 3)]
       (is (= (:current-position result) expected-position))
+      (is (= (:turns result) expected-turns))))
+  (testing "Given a board with snakes and ladders and a player on tile 1
+            when the roll landing on a ladder that takes them to tile 1
+            the player stays on tile 1 and keeps record of their turn"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          expected-position 6
+          expected-turns [[2]]
+          result  (make-move game-state board 2)]
+      (is (= (:current-position result) expected-position))
       (is (= (:turns result) expected-turns)))))

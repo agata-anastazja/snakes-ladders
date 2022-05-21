@@ -7,8 +7,8 @@
       (conj (drop-last previous-turns) (conj last-turn roll))
       (conj previous-turns [roll]))))
 
-(defn apply-modifier [field-modifier]
-  (second (:snake field-modifier)))
+(defn apply-modifier [{:keys [snake ladder]}]
+  (or (second snake) (second ladder)))
 
 (defn update-position [previous-position board roll]
   (let [tile (+ previous-position roll)
