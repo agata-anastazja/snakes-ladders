@@ -1,7 +1,9 @@
 # snake-and-ladders
 
 A Clojure library designed to ... well, that part is up to you.
+Approach
 
+Throughout the game fields on the board are reffered through their indices from 0 - 99
 ## Assumptions
 
 When the player lands on the same snake more then once we keep track of each slide

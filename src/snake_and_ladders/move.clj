@@ -16,11 +16,17 @@
       (and snake-entry-before-selected-tile (<= (- tile snake-entry-before-selected-tile) 2))))
     false))
 
+(defn check-final-rolls [current-position turns]
+  (if (= 99 current-position)
+    true
+    false))
+
 (defn count-if-lucky-roll [state board]
   (let [snakes (find-snakes board)
         snake-entries (find-modifier-entrypoints snakes)
-        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snake-entries)]
-    (if close-miss-snake
+        close-miss-snake (distance-from-nearest-snakes-two-or-less (:current-position state) snake-entries)
+        one-attempt-at-final-roll (check-final-rolls (:current-position state) (:turns state))]
+    (if (or close-miss-snake one-attempt-at-final-roll)
       (update-in state [:lucky-rolls] (fn [lucky-rolls-counter] (inc lucky-rolls-counter)))
       state)))
 
@@ -38,7 +44,7 @@
 (defn update-position [state board roll]
   (let [previous-tile (:current-position state)
         attempted-tile (+ previous-tile roll)
-        tile (if (> attempted-tile 100)
+        tile (if (> attempted-tile 99)
                previous-tile
                attempted-tile)
         has-field-modifier (not-empty (nth board tile))]

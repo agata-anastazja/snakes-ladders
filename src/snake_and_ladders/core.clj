@@ -1,7 +1,7 @@
 (ns snake-and-ladders.core)
 
 (def initial-game-state 
-  {:current-position 1
+  {:current-position 0
    :turns []
    :lucky-rolls 0
    :unlucky-rolls 0
