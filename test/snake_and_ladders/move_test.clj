@@ -37,7 +37,17 @@
           expected-result [[6 3]]]
       (is (= (:turns (->
                       (make-move game-state board 6)
-                      (make-move board 3))) expected-result))))) 
+                      (make-move board 3))) expected-result))))
+  (testing "Given an empty board and a player on tile 97
+            when the roll is 4
+            the player moves stays on tile 97, but keeps track of the roll"
+    (let [board (initialise-empty-board)
+          game-state  (update-in initial-game-state [:current-position] (fn [_] 97))
+          result (make-move game-state board 4)
+          expected-turns [[4]]
+          expected-current-position 97]
+      (is (= (:current-position result) expected-current-position))
+      (is (= (:turns result) expected-turns))))) 
 
 (deftest snakes-and-ladders-board-roll-test
   (testing "Given a board with snakes and ladders and a player on tile 1

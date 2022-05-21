@@ -6,6 +6,7 @@ A Clojure library designed to ... well, that part is up to you.
 
 When the player lands on the same snake more then once we keep track of each slide
 When different players land on the same snake we keep track of each slide
+Landing field from a snake or ladder will not be the beginning of snake or ladder
 
 ## License
 

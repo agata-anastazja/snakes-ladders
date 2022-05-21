@@ -9,19 +9,23 @@
 
 (defn apply-modifier [state {:keys [snake ladder]}]
   (cond
-   snake (-> state
-             (update-in [:current-position] (fn [_] (second snake)))
-             (update-in [:slides]  (fn [previous-slides] (conj previous-slides snake))))
+    snake (-> state
+              (update-in [:current-position] (fn [_] (second snake)))
+              (update-in [:slides]  (fn [previous-slides] (conj previous-slides snake))))
     ladder (-> state
-              (update-in [:current-position] (fn [_] (second ladder)))
-               (update-in [:climbs] (fn[previous-climbs] (conj previous-climbs ladder))))))
+               (update-in [:current-position] (fn [_] (second ladder)))
+               (update-in [:climbs] (fn [previous-climbs] (conj previous-climbs ladder))))))
 
 (defn update-position [state board roll]
-  (let [tile (+ (:current-position state) roll)
-        field-modifier (nth board tile)]
-    (if (empty? field-modifier)
-      (update-in state [:current-position] (fn[_] tile))
-      (apply-modifier state field-modifier))))
+  (let [previous-tile (:current-position state)
+        attempted-tile (+ previous-tile roll)
+        tile (if (> attempted-tile 100)
+               previous-tile
+               attempted-tile)
+        has-field-modifier (not-empty (nth board tile))]
+    (if has-field-modifier
+      (apply-modifier state (nth board tile))
+      (update-in state [:current-position] (fn [_] tile)))))
 
 (defn make-move [state board roll]
   (->
