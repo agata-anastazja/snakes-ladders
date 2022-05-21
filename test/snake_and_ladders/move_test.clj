@@ -111,4 +111,11 @@
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
           result  (make-move game-state board 2)]
+      (is (= (:lucky-rolls result) 1))))
+  (testing "Given a board with a ladder 
+            when the roll lands one step away from snake
+            we keep track of the lucky roll"
+    (let [board (initialise-board [[4 1]] [[5 6]])
+          game-state initial-game-state
+          result  (make-move game-state board 2)]
       (is (= (:lucky-rolls result) 1)))))

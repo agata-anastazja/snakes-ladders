@@ -9,6 +9,8 @@ When different players land on the same snake we keep track of each slide
 Landing field from a snake or ladder will not be the beginning of snake or ladder
 A roll can be lucky and unlucky at the same time
 A single roll can be lucky for more then one reason but will be counted just once
+A roll is lucky if we land next to snake without stepping on it when we get off the ladder if there is a ladder
+A roll is lucky and unlucky if we land on a snake entry point that is just next to another snake entrypoints
 
 ## License
 

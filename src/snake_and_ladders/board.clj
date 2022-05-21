@@ -7,10 +7,10 @@
   (update board (first snake) (fn [_] {:snake snake})))
 
 (defn apply-ladder [board ladder]
-    (update board (first ladder) (fn [_] {:ladder ladder})))
+  (update board (first ladder) (fn [_] {:ladder ladder})))
 
 (defn apply-snakes [board snakes]
-  (reduce (fn [acc snake] (apply-snake acc snake)) board snakes ))
+  (reduce (fn [acc snake] (apply-snake acc snake)) board snakes))
 
 (defn apply-ladders [board ladders]
   (reduce (fn [acc ladder] (apply-ladder acc ladder)) board ladders))
@@ -20,3 +20,11 @@
    (initialise-empty-board)
    (apply-snakes snakes)
    (apply-ladders ladders)))
+
+(defn find-snakes [board]
+  (reduce (fn [acc {:keys [snake]}]
+            (if (not-empty snake)
+              (conj acc snake) 
+              acc))
+          []
+          board))

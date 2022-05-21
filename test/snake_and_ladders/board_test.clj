@@ -35,3 +35,13 @@
       (is (= 100 (count result)))
       (is (= (nth result 4) {:snake [4 3]}))
       (is (= (nth result 2) {:ladder [2 5]})))))
+
+(deftest reading-board-test
+  (testing "given a board with snakes
+            you can find all the snakes"
+    (let [snakes [[4 3] [7 5] [10 8]]
+          ladders [[2 5]]
+          board (initialise-board snakes ladders)
+          result (find-snakes board)
+          expected-result snakes]
+      (is (= result expected-result)))))
