@@ -103,3 +103,12 @@
             result  (-> (make-move game-state board 3)
                         (make-move board 4))]
         (is (= (:unlucky-rolls result) 2)))))
+
+(deftest lucky-roll-test
+  (testing "Given a board with a ladder 
+            when the roll lands on a ladder
+            we keep track of the lucky roll"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          result  (make-move game-state board 2)]
+      (is (= (:lucky-rolls result) 1)))))
