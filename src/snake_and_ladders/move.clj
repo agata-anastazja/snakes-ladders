@@ -11,6 +11,7 @@
   (cond
     snake (-> state
               (update-in [:current-position] (fn [_] (second snake)))
+              (update-in [:unlucky-rolls] (fn[_] 1))
               (update-in [:slides]  (fn [previous-slides] (conj previous-slides snake))))
     ladder (-> state
                (update-in [:current-position] (fn [_] (second ladder)))

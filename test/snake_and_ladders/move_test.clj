@@ -47,7 +47,7 @@
           expected-turns [[4]]
           expected-current-position 97]
       (is (= (:current-position result) expected-current-position))
-      (is (= (:turns result) expected-turns))))) 
+      (is (= (:turns result) expected-turns)))))
 
 (deftest snakes-and-ladders-board-roll-test
   (testing "Given a board with snakes and ladders and a player on tile 1
@@ -86,3 +86,12 @@
           expected-climbs [[3 6]]
           result  (make-move game-state board 2)]
       (is (= (:climbs result) expected-climbs)))))
+
+(deftest unlucky-roll-test
+  (testing "Given a board with snakes 
+            when the roll lands on a snake
+            we keep track of the unlucky roll"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          result  (make-move game-state board 3)]
+      (is (= (:unlucky-rolls result) 1)))))
