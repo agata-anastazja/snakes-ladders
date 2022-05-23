@@ -22,4 +22,4 @@
 
 (defn roll
   []
-  (+ (rand-int 5) 1))
+  (+ (rand-int 6) 1))

@@ -5,7 +5,7 @@
   (let [last-turn (last previous-turns)
         is-last-roll-six (= (last last-turn) 6)]
     (if is-last-roll-six
-      (conj (drop-last previous-turns) (conj last-turn roll))
+      (conj (pop previous-turns) (conj last-turn roll))
       (conj previous-turns [roll]))))
 
 (defn apply-modifier [state {:keys [snake ladder]}]
@@ -32,7 +32,8 @@
 
 (defn make-move [state board roll]
   (->
-   (update-position state board roll)
+   state
+   (update-position board roll)
    (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))
    (modified_roll/count-if-lucky-roll board)
    modified_roll/count-if-unlucky-roll))
