@@ -9,18 +9,6 @@
           (and snake-before-selected-tile (<= (- tile snake-before-selected-tile) 2))))
     false))
 
-(defn single-attempt-at-last-roll
-  [turns]
-  (let [last-turn (last turns)
-        second-last-turn (last (drop-last turns))]
-    (> (reduce + (flatten [last-turn second-last-turn])) 6)))
-
-(defn check-final-rolls [current-position turns]
-  (and (= 99 current-position)
-       (or
-        (= (count turns) 1)
-        (single-attempt-at-last-roll turns))))
-
 (defn miss-snake? [board current-position]
   (->>
    board
@@ -31,9 +19,8 @@
 (defn count-if-lucky-roll [state board]
   (let [current-position (:current-position state)
         miss-snake (miss-snake? board current-position)
-        step-on-ladder (:step-on-ladder state)
-        one-attempt-at-final-roll (check-final-rolls (:current-position state) (:turns state))]
-    (if (or step-on-ladder one-attempt-at-final-roll miss-snake)
+        step-on-ladder (:step-on-ladder state)]
+    (if (or step-on-ladder miss-snake)
       (update-in state [:lucky-rolls] (fn [lucky-rolls-counter] (inc lucky-rolls-counter)))
       state)))
 

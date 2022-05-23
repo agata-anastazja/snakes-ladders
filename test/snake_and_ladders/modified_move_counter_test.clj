@@ -36,20 +36,5 @@
     (let [board (initialise-board [[4 1]] [[10 16]])
           game-state (game-with-current-position 6)
           result  (count-if-lucky-roll game-state board)]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given you reach position is 99
-            when you got to 99 at the first atempt
-            we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (game-with-current-position-and-turns 99 [[91] [5] [3]])
-          result  (count-if-lucky-roll game-state board)]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given you reach position is 99
-            when you got to 99 at the second atempt
-            we don't keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (game-with-current-position-and-turns 99 [[93] [3] [3]])
-          result  (count-if-lucky-roll game-state board)]
-      (is (= (:lucky-rolls result) 0)))))
+      (is (= (:lucky-rolls result) 1)))))
 
-;; next test [[95] [6] [3]] rolls

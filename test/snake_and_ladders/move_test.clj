@@ -92,3 +92,12 @@
           result  (make-move game-state board 3)]
       (is (= (:climbs result) expected-climbs)))))
 
+(deftest reached-single-roll-finish-at-test
+  (testing "Given the game is possible to finish in a single roll
+            the flag is set to true"
+    (let [board (initialise-board [[4 1]] [[3 6]])
+          game-state initial-game-state
+          expected-climbs [[3 6]]
+          result  (make-move game-state board 3)]
+      (is (= (:climbs result) expected-climbs)))))
+
