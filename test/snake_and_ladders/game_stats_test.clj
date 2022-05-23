@@ -4,9 +4,17 @@
    [snake-and-ladders.game-stats :refer :all]
    [snake-and-ladders.test-helper :refer :all]))
 
+(def example-finished-game
+  {:turns [[1] [1] [1] [2]], :lucky-rolls 4, :step-on-ladder false, :slides [[1 0] [1 0] [1 0]], :step-on-snake false, :turns-in-strike-teritory 1, :unlucky-rolls 3, :current-position 99, :climbs [[2 99]]})
+
 (deftest produce-game-stats-test
   (testing "Given a finished game state
             it produces game stats on number of rolls needed to win"
-    (let [game {:turns [[1] [1] [1] [2]], :lucky-rolls 4, :step-on-ladder false, :slides [[1 0] [1 0] [1 0]], :step-on-snake false, :turns-in-strike-teritory 1, :unlucky-rolls 3, :current-position 99, :climbs [[2 99]]}
+    (let [game example-finished-game
           result (produce-game-stats game)]
-      (is (= (:rolls-to-win-counter result) 4)))))
+      (is (= (:rolls-to-win-counter result) 4))))
+  (testing "Given a finished game state
+            it produces game stats on number of rolls needed to win"
+    (let [game example-finished-game
+          result (produce-game-stats game)]
+      (is (= (:climb-distances result) [97])))))

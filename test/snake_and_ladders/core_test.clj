@@ -42,7 +42,6 @@
     (let [rolls  [1 1 1 2 1 1 1]
           board (initialise-board   [[1 0]] [[2 99]])
           result (play board rolls)]
-      (prn result)
       (is (= (:slides result) [[1 0] [1 0] [1 0]]))
       (is (= (:unlucky-rolls result) 3))
       (is (= (:climbs result) [[2 99] ]))))
