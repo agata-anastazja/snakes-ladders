@@ -19,3 +19,7 @@
    position
    game-with-current-position
    (update-in [:turns] (fn [_] turns))))
+
+(defn roll
+  []
+  (+ (rand-int 5) 1))

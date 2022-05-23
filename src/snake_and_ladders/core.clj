@@ -9,3 +9,7 @@
    :unlucky-rolls 0
    :climbs []
    :slides []})
+
+
+(defn play [board turns]
+  initial-game-state)
