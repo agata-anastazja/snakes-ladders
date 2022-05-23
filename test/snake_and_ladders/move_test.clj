@@ -133,4 +133,12 @@
     (let [board (initialise-board [[4 1]] [[10 16]])
           game-state (update-in initial-game-state [:current-position] (fn [_] 94))
           result  (make-move game-state board 5)]
-      (is (= (:lucky-rolls result) 1)))))
+      (is (= (:lucky-rolls result) 1))))
+  (testing "Given a current position is 94
+            when the first roll is 2 and the second is 3
+            we don't keep track of the lucky roll"
+    (let [board (initialise-board [[4 1]] [[10 16]])
+          game-state (update-in initial-game-state [:current-position] (fn [_] 94))
+          result  (-> (make-move game-state board 2)
+                      (make-move board 3))]
+      (is (= (:lucky-rolls result) 0)))))

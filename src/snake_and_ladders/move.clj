@@ -13,11 +13,19 @@
     (let [snake-entry-after-selected-tile (first (filter (fn [x] (> x tile)) snake-entry-points))
           snake-entry-before-selected-tile  (first (filter (fn [x] (< x tile)) snake-entry-points))]
       (or (and snake-entry-after-selected-tile (<= (- snake-entry-after-selected-tile tile) 2))
-      (and snake-entry-before-selected-tile (<= (- tile snake-entry-before-selected-tile) 2))))
+          (and snake-entry-before-selected-tile (<= (- tile snake-entry-before-selected-tile) 2))))
     false))
 
+(defn single-attempt-at-last-roll
+  [turns]
+  (let [last-turn (last turns)
+        second-last-turn (last (drop-last turns))]
+    (> (reduce + (flatten [last-turn second-last-turn])) 6)))
+
 (defn check-final-rolls [current-position turns]
-  (if (= 99 current-position)
+
+  (if (and (= 99 current-position) (or (= (count turns) 1)
+                                       (single-attempt-at-last-roll turns)))
     true
     false))
 
@@ -55,5 +63,6 @@
 (defn make-move [state board roll]
   (->
    (update-position state board roll)
-   (count-if-lucky-roll board)
-   (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))))
+
+   (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))
+   (count-if-lucky-roll board)))
