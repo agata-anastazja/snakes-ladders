@@ -31,9 +31,21 @@
       (is (not= (:slides result) 0))))
   (testing "given a board and rolls
             when you land on snakes 3 times
-            you keep track of your slides"
+            you keep track of your slides and unlucky rolls"
     (let [rolls (rolls-starting-with [1 1 1 2])
           board (initialise-board   [[1 0]] [[10 99]])
           result (play board rolls)]
       (is (= (:slides result) [[1 0] [1 0] [1 0]]))
-      (is (= (:unlucky-rolls result) 3)))))
+      (is (= (:unlucky-rolls result) 3))))
+  (testing "given a board and rolls
+            when you land on ladders 3 times
+            you keep track of your climbs and lucky rolls"
+    (let [rolls (no-6-rolls-starting-with [1 1 1 2])
+          board (initialise-board [] [[1 2]
+                                      [3 4]
+                                      [5 6]])
+          result (play board rolls)]
+      (is (= (:climbs result) [[1 2]
+                               [3 4]
+                               [5 6]]))
+      (is (= (:lucky-rolls result) 3)))))

@@ -21,11 +21,18 @@
    (update-in [:turns] (fn [_] turns))))
 
 (defn roll
-  []
+  ([]
   (+ (rand-int 6) 1))
+  ([limit]
+   (+ (rand-int limit) 1)))
 
-(defn random-rolls [] 
+(defn random-rolls ([]
   (doall  (repeatedly 100 roll)))
+  ([limit]
+   (doall  (repeatedly 100 #(roll limit)))))
 
 (defn rolls-starting-with [starting-rolls]
   (vec (flatten (conj starting-rolls (random-rolls)))))
+
+(defn no-6-rolls-starting-with [starting-rolls]
+  (vec (flatten (conj starting-rolls (random-rolls 5)))))
