@@ -48,6 +48,8 @@
   (testing "given a board with snakes
             you can find all the snake entry points"
     (let [snakes [[4 3] [7 5] [10 8]]
-          result (find-modifier-entrypoints snakes)
+          ladders [[2 5]]
+          board (initialise-board snakes ladders)
+          result (find-snake-entrypoints board)
           expected-result [4 7 10]]
       (is (= result expected-result)))))

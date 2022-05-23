@@ -50,36 +50,41 @@
       (is (= (:turns result) expected-turns)))))
 
 (deftest snakes-and-ladders-board-roll-test
-  (testing "Given a board with snakes and ladders and a player on tile 1
-            when the roll landing on a snake that takes them to tile 1
-            the player stays on tile 1 and keeps record of their turn"
+  (testing "Given a board with snakes
+            when the roll landing on a snake that takes player to tile 1
+            the player stays on tile 1 and keeps record of their turn
+            as well as sets the stepped on snake flag to true"
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
           expected-position 1
           expected-turns [[4]]
           result  (make-move game-state board 4)]
       (is (= (:current-position result) expected-position))
-      (is (= (:turns result) expected-turns))))
-  (testing "Given a board with snakes and ladders and a player on tile 1
-            when the roll landing on a snake that takes them to tile 1
+      (is (= (:turns result) expected-turns))
+      (is (= (:step-on-snake result) true))))
+  (testing "Given a board with snakes 
+            when the roll landing on a snake that takes player to tile 1
             we keep track of the slide"
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
           expected-slides [[4 1]]
           result  (make-move game-state board 4)]
       (is (= (:slides result) expected-slides))))
-  (testing "Given a board with snakes and ladders and a player on tile 1
-            when the roll landing on a ladder that takes them to tile 6
-            the player moves to tile 6 and keeps record of their turn"
+  (testing "Given a board with ladders
+            when the roll landing on a ladder that takes player to tile 6
+            the player moves to tile 6 and keeps record of their turn
+             as well as sets the stepped on ladder flag to true"
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
           expected-position 6
           expected-turns [[3]]
           result  (make-move game-state board 3)]
       (is (= (:current-position result) expected-position))
-      (is (= (:turns result) expected-turns))))
-  (testing "Given a board with snakes and ladders and a player on tile 1
-            when the roll landing on a ladder that takes them to tile 6
+      (is (= (:turns result) expected-turns))
+      (is (= (:step-on-ladder result) true))))
+
+  (testing "Given a board with snakes 
+            when the roll landing on a ladder that takes player to tile 6
             we keep track of the climb"
     (let [board (initialise-board [[4 1]] [[3 6]])
           game-state initial-game-state
@@ -87,58 +92,3 @@
           result  (make-move game-state board 3)]
       (is (= (:climbs result) expected-climbs)))))
 
-(deftest unlucky-roll-test
-  (testing "Given a board with a snake 
-            when the roll lands on a snake
-            we keep track of the unlucky roll"
-    (let [board (initialise-board [[4 1]] [[3 6]])
-          game-state initial-game-state
-          result  (make-move game-state board 4)]
-      (is (= (:unlucky-rolls result) 1))))
-  (testing "Given a board with two snakes 
-            when the roll lands on a snake twice
-            we keep track of the unlucky rolls"
-    (let [board (initialise-board [[4 1] [5 2]] [[3 6]])
-          game-state initial-game-state
-          result  (-> (make-move game-state board 4)
-                      (make-move board 4))]
-      (is (= (:unlucky-rolls result) 2)))))
-
-(deftest lucky-roll-test
-  (testing "Given a board with a ladder 
-            when the roll lands on a ladder
-            we keep track of the lucky roll"
-    (let [board (initialise-board [[6 1]] [[3 6]])
-          game-state initial-game-state
-          result  (make-move game-state board 3)]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given a board with a snake 
-            when the roll lands one tile before the snake
-            we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[5 6]])
-          game-state initial-game-state
-          result  (make-move game-state board 2)]
-      (is (= (:lucky-rolls result) 1))))
-
-  (testing "Given a board with a snake 
-            when the roll lands one tile after the snake
-            we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state initial-game-state
-          result  (make-move game-state board 5)]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given a current position is 94
-            when the roll lands on 99
-            we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (update-in initial-game-state [:current-position] (fn [_] 94))
-          result  (make-move game-state board 5)]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given a current position is 94
-            when the first roll is 2 and the second is 3
-            we don't keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (update-in initial-game-state [:current-position] (fn [_] 94))
-          result  (-> (make-move game-state board 2)
-                      (make-move board 3))]
-      (is (= (:lucky-rolls result) 0)))))

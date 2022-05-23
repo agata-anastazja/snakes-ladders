@@ -29,11 +29,9 @@
           []
           board))
 
-(defn find-modifier-entrypoints [modifiers]
-  (->>
-   modifiers
-   (map first)
-   sort))
-
-
-
+(defn find-snake-entrypoints [board]
+    (->>
+     board
+     find-snakes
+     (map first)
+     sort))
