@@ -6,14 +6,12 @@
   {:current-position 0
    :turns []
    :lucky-rolls 0
+   :unlucky-rolls 0
    :step-on-ladder false
    :step-on-snake false
    :turns-in-strike-teritory 0
-   :unlucky-rolls 0
    :climbs []
    :slides []})
-
-
 
 (defn reset-state [state]
   (assoc state  :step-on-snake false :step-on-ladder false))
@@ -34,3 +32,4 @@
               (play-turn-and-collect-stats current-state board roll)))
           initial-game-state
           rolls))
+

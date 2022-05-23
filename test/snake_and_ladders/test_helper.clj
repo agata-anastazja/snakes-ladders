@@ -22,12 +22,12 @@
 
 (defn roll
   ([]
-  (+ (rand-int 6) 1))
+   (+ (rand-int 6) 1))
   ([limit]
    (+ (rand-int limit) 1)))
 
 (defn random-rolls ([]
-  (doall  (repeatedly 100 roll)))
+                    (doall  (repeatedly 100 roll)))
   ([limit]
    (doall  (repeatedly 100 #(roll limit)))))
 
@@ -36,3 +36,4 @@
 
 (defn no-6-rolls-starting-with [starting-rolls]
   (vec (flatten (conj starting-rolls (random-rolls 5)))))
+

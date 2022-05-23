@@ -38,6 +38,15 @@
       (is (= (:slides result) [[1 0] [1 0] [1 0]]))
       (is (= (:unlucky-rolls result) 3))))
   (testing "given a board and rolls
+            when you land on snakes 3 times and on ladder 1"
+    (let [rolls  [1 1 1 2 1 1 1]
+          board (initialise-board   [[1 0]] [[2 99]])
+          result (play board rolls)]
+      (prn result)
+      (is (= (:slides result) [[1 0] [1 0] [1 0]]))
+      (is (= (:unlucky-rolls result) 3))
+      (is (= (:climbs result) [[2 99] ]))))
+  (testing "given a board and rolls
             when you land on ladders 3 times
             you keep track of your climbs and lucky rolls"
     (let [rolls (no-6-rolls-starting-with [1 1 1 2])
