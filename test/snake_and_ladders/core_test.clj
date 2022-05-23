@@ -12,7 +12,7 @@
           board (initialise-empty-board)
           result (play board random-rolls)
           available-information (keys result)
-          expected-information '(:current-position :turns :lucky-rolls :step-on-ladder :step-on-snake :unlucky-rolls :climbs :slides)]
+          expected-information '(:turns :lucky-rolls :step-on-ladder :slides :step-on-snake :turns-in-strike-teritory :unlucky-rolls :current-position :climbs)]
       (is (= expected-information available-information))
       (is (= (:current-position result) 99))))
   (testing "given a board and rolls that land you on ladders
@@ -47,5 +47,4 @@
           result (play board rolls)]
       (is (= (:climbs result) [[1 2]
                                [3 4]
-                               [5 6]]))
-      (is (= (:lucky-rolls result) 3)))))
+                               [5 6]])))))

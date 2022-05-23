@@ -1,5 +1,4 @@
-(ns snake-and-ladders.move
-  (:require [snake-and-ladders.modified-move-counter :as modified_roll]))
+(ns snake-and-ladders.move)
 
 (defn update-turns [previous-turns roll]
   (let [last-turn (last previous-turns)
@@ -34,6 +33,4 @@
   (->
    state
    (update-position board roll)
-   (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))
-   (modified_roll/count-if-lucky-roll board)
-   modified_roll/count-if-unlucky-roll))
+   (update-in  [:turns] (fn [previous-turns] (update-turns previous-turns roll)))))
