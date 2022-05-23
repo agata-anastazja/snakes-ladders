@@ -11,10 +11,14 @@
    :climbs []
    :slides []})
 
+(defn reset-state [state]
+  (assoc state  :step-on-snake false))
+
 (defn play [board rolls]
-  (reduce (fn [current-state roll] (if
-                                    (= (:current-position current-state) 99)
-                                     (reduced current-state)
-                                     (move/make-move current-state board roll)))
+  (reduce (fn [current-state roll]
+            (if
+             (= (:current-position current-state) 99)
+              (reduced current-state)
+              (move/make-move (reset-state current-state) board roll)))
           initial-game-state
           rolls))

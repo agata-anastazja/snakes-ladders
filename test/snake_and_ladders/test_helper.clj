@@ -4,7 +4,7 @@
 (defn stepped-on-snake-game []
   (->
    initial-game-state
-   (update-in [:step-on-snake] (fn[_] true))))
+   (update-in [:step-on-snake] (fn [_] true))))
 
 (defn stepped-on-ladder-game []
   (->
@@ -23,3 +23,9 @@
 (defn roll
   []
   (+ (rand-int 6) 1))
+
+(defn random-rolls [] 
+  (doall  (repeatedly 100 roll)))
+
+(defn rolls-starting-with [starting-rolls]
+  (vec (flatten (conj starting-rolls (random-rolls)))))
