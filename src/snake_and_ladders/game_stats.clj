@@ -21,4 +21,7 @@
    (assoc :climb-distances (mapv #(->>
                                    %
                                    reverse
-                                   (reduce -)) (:climbs game)))))
+                                   (reduce -)) (:climbs game)))
+   (assoc :slide-distances (mapv #(->>
+                                   %
+                                   (reduce -)) (:slides game)))))

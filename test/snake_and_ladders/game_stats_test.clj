@@ -14,7 +14,12 @@
           result (produce-game-stats game)]
       (is (= (:rolls-to-win-counter result) 4))))
   (testing "Given a finished game state
-            it produces game stats on number of rolls needed to win"
+            it produces game stats on distances on climbs"
     (let [game example-finished-game
           result (produce-game-stats game)]
-      (is (= (:climb-distances result) [97])))))
+      (is (= (:climb-distances result) [97]))))
+   (testing "Given a finished game state
+            it produces game stats  on distances on slides"
+     (let [game example-finished-game
+           result (produce-game-stats game)]
+       (is (= (:slide-distances result) [1 1 1])))))
