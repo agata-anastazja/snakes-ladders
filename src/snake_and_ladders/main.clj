@@ -2,10 +2,6 @@
   (:require [snake-and-ladders.core :as core]
             [snake-and-ladders.game-stats :as game-stats]))
 
-(defn tap [x]
-  (prn "!!! " x)
-  x)
-
 (def initial-stats
   {:rolls-to-win-counter {:minimum 0 :average 0 :maximum 0}
    :climb-distances {:minimum 0 :average 0 :maximum 0}
@@ -50,6 +46,13 @@
   (-> (core/play board rolls)
       (game-stats/produce-game-stats)))
 
+(defn update-highest-slide [state games]
+  (let [climbs (mapv #(->>
+                       %
+                       :highest-slide) games)
+        highest-climb (last (vec (sort climbs)))]
+    (update-in state [:highest-slide] (fn [_] highest-climb))))
+
 (defn update-highest-climb [state games]
   (let [climbs (mapv #(->>
                        %
@@ -65,4 +68,5 @@
      (update-climb-distances games)
      (update-slide-distances games)
 
-     (update-highest-climb games))))
+     (update-highest-climb games)
+     (update-highest-slide games))))
