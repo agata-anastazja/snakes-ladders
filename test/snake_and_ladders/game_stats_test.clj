@@ -42,4 +42,9 @@
             it produces game stats  on lucky rolls"
     (let [game example-finished-game
           result (produce-game-stats game)]
-      (is (= (:lucky-rolls result) 4)))))
+      (is (= (:lucky-rolls result) 4))))
+  (testing "Given a finished game state
+            it produces game stats  on unlucky rolls"
+    (let [game example-finished-game
+          result (produce-game-stats game)]
+      (is (= (:unlucky-rolls result) 3)))))

@@ -45,4 +45,5 @@
    get-highest-climb
    get-highest-slide
    (get-longest-turn game)
-   (assoc :lucky-rolls (:lucky-rolls game))))
+   (assoc :lucky-rolls (:lucky-rolls game))
+   (assoc :unlucky-rolls (:unlucky-rolls game))))
