@@ -20,10 +20,21 @@
         average (/ (reduce + rolls-to-win-accross-all-games) (count rolls-to-win-accross-all-games))]
     (update-in state [:rolls-to-win-counter] assoc :minimum minimum :maximum maximum :average average)))
 
+(defn update-climb-distances [state games]
+  (let [climbs-accross-all-games (flatten (map :climb-distances games))
+        sorted-climbs (sort climbs-accross-all-games)
+        minimum (first sorted-climbs)
+        maximum (last sorted-climbs)
+        average (/ (reduce + climbs-accross-all-games) (count climbs-accross-all-games))]
+    (update-in state [:climb-distances] assoc :minimum minimum :maximum maximum :average average)))
+
 (defn play-and-collect-stats [board rolls]
   (-> (core/play board rolls)
       (game-stats/produce-game-stats)))
 
 (defn main [board rolls]
   (let [games (mapv #(play-and-collect-stats board %) rolls)]
-    (update-rolls-to-win initial-stats games)))
+    (->
+     initial-stats
+     (update-rolls-to-win games)
+     (update-climb-distances games))))
