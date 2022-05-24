@@ -12,13 +12,13 @@
 
 (def initial-simulation-stats
   {:rolls-to-win-counter {:minimum 0 :average 0 :maximum 0}
+   :unlucky-rolls {:minimum 0 :average 0 :maximum 0}
+   :lucky-rolls {:minimum 0 :average 0 :maximum 0}
    :climb-distances {:minimum 0 :average 0 :maximum 0}
    :slide-distances {:minimum 0 :average 0 :maximum 0}
    :highest-climb 0
    :highest-slide 0
-   :longest-turn []
-   :unlucky-rolls {:minimum 0 :average 0 :maximum 0}
-   :lucky-rolls {:minimum 0 :average 0 :maximum 0}})
+   :longest-turn []})
 
 (defn get-highest-climb [current-stats]
   (update-in current-stats [:highest-climb] (fn [_] (last (sort (:climb-distances current-stats))))))
@@ -64,10 +64,19 @@
      :maximum (last sorted-coll)
      :average (/ (reduce + collection) (count collection))}))
 
+(defn update-counter [game-stats-coll counter-name simulation-stats]
+  (let [counters (get-property-vector game-stats-coll counter-name)
+        stat (calculate-min-max-average counters)]
+    (update-in simulation-stats [counter-name] (fn [_] stat))))
+
+(defn update-unlucky-rolls [game-stats-coll simulation-stats]
+  (update-counter game-stats-coll :unlucky-rolls simulation-stats))
+
 (defn update-rolls-to-win [game-stats-coll simulation-stats]
-  (let [rolls-to-win-counters (get-property-vector game-stats-coll :rolls-to-win-counter)
-        stat (calculate-min-max-average rolls-to-win-counters)]
-    (update-in simulation-stats [:rolls-to-win-counter] (fn [_] stat))))
+  (update-counter game-stats-coll :rolls-to-win-counter simulation-stats))
+
+(defn update-lucky-rolls [game-stats-coll simulation-stats]
+  (update-counter game-stats-coll :lucky-rolls simulation-stats))
 
 (defn update-climb-distances-and-highest-climb [game-stats-coll current-simulation-stats]
   (let [all-climbs (get-property-vector game-stats-coll :climb-distances)
@@ -90,4 +99,6 @@
    initial-simulation-stats
    (update-rolls-to-win game-stats-coll)
    (update-climb-distances-and-highest-climb game-stats-coll)
-   (update-slide-distances-and-highest-slide game-stats-coll)))
+   (update-slide-distances-and-highest-slide game-stats-coll)
+   (update-unlucky-rolls game-stats-coll)
+   (update-lucky-rolls game-stats-coll)))
