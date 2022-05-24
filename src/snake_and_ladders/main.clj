@@ -28,6 +28,14 @@
         average (/ (reduce + climbs-accross-all-games) (count climbs-accross-all-games))]
     (update-in state [:climb-distances] assoc :minimum minimum :maximum maximum :average average)))
 
+(defn update-slide-distances [state games]
+  (let [climbs-accross-all-games (flatten (map :slide-distances games))
+        sorted-climbs (sort climbs-accross-all-games)
+        minimum (first sorted-climbs)
+        maximum (last sorted-climbs)
+        average (/ (reduce + climbs-accross-all-games) (count climbs-accross-all-games))]
+    (update-in state [:slide-distances] assoc :minimum minimum :maximum maximum :average average)))
+
 (defn play-and-collect-stats [board rolls]
   (-> (core/play board rolls)
       (game-stats/produce-game-stats)))
@@ -37,4 +45,5 @@
     (->
      initial-stats
      (update-rolls-to-win games)
-     (update-climb-distances games))))
+     (update-climb-distances games)
+     (update-slide-distances games))))
