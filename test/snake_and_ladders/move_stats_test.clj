@@ -15,23 +15,23 @@
       (is (= (:unlucky-rolls result) 1)))))
 
 (deftest lucky-roll-test
-  (testing "Given your previous position was 96
-            when you got to 99 at the first atempt
+  (testing "Given your previous position was square 97
+            when you get to square 100 at the first atempt
             we keep track of the lucky roll"
     (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 1))
+          game-state (update-in (game-with-current-position 100) [:turns-in-strike-teritory] (fn [_] 1))
           result  (count-if-lucky-roll game-state board)]
       (is (= (:lucky-rolls result) 1))))
-  (testing "Given you reach position is 99
-            when you got to 99 at the second atempt
-            we don't keep track of the lucky roll"
+  (testing "Given you reach square 100
+            when you got to 100 at the second atempt
+            it does not count as lucky roll"
     (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 0))
+          game-state (update-in (game-with-current-position 100) [:turns-in-strike-teritory] (fn [_] 0))
           result  (count-if-lucky-roll game-state board)]
       (is (= (:lucky-rolls result) 0)))))
 (testing "Given a game
-            when we land on ladder
-            we keep track of the lucky roll"
+          when we land on ladder
+          we keep track of the lucky roll"
   (let [board (initialise-empty-board)
         game-state (stepped-on-ladder-game)
         result  (count-if-lucky-roll game-state board)]
@@ -57,14 +57,14 @@
   (testing "Given a previous roll wasn't close enough to win in single roll
             when current position is at 93 
             next roll can be a lucky strike"
-    (let [game-state (game-with-current-position-and-turns 94 [[91] [5] [3]])
+    (let [game-state (game-with-current-position-and-turns 94 [[92] [5] [4]])
           result (update-if-next-roll-can-be-strike game-state 92)]
       (is (= (:turns-in-strike-teritory result) 1))))
   (testing "Given a previous roll was close enough to win in single roll
             when current position is at 95
             next roll cannot be a lucky strike"
-    (let [game-state (game-with-current-position-and-turns 95 [[91] [5] [3]])
-          result (update-if-next-roll-can-be-strike game-state 93)]
+    (let [game-state (game-with-current-position-and-turns 96 [[92] [5] [4]])
+          result (update-if-next-roll-can-be-strike game-state 95)]
       (is (= (:turns-in-strike-teritory result) 0)))))
 
 
@@ -72,5 +72,5 @@
   (testing "Given we have reached winning spot in one turn
             from when we could have reached it
             it's a lucky strike"
-    (let [game (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 1))]
+    (let [game (update-in (game-with-current-position 100) [:turns-in-strike-teritory] (fn [_] 1))]
       (is (= (lucky-strike? game) true)))))

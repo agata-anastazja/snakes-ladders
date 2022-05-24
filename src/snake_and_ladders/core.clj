@@ -1,5 +1,6 @@
 (ns snake-and-ladders.core
   (:require [snake-and-ladders.move :as move]
+            [snake-and-ladders.config :as config]
             [snake-and-ladders.move-stats :as move-stats]))
 
 (def initial-game-state
@@ -27,11 +28,8 @@
 (defn play [board rolls]
   (reduce (fn [current-state roll]
             (if
-             (= (:current-position current-state) 99)
+             (= (:current-position current-state) config/winning-square-index)
               (reduced current-state)
               (play-turn-and-collect-stats current-state board roll)))
           initial-game-state
           rolls))
-
-(defn play-games[games]
-  (map (fn[game](let [{:keys [board rolls]} game](play board rolls))) games))
