@@ -12,29 +12,29 @@
    :unlucky-rolls {:minimum 0 :average 0 :maximum 0}
    :lucky-rolls {:minimum 0 :average 0 :maximum 0}})
 
+(defn find-min-max-average [coll]
+  (let [sorted-coll (sort coll)
+        minimum (first sorted-coll)
+        maximum (last sorted-coll)
+        average (/ (reduce + coll) (count coll))]
+    {:minimum minimum
+     :maximum maximum
+     :average average}))
+
 (defn update-rolls-to-win [state games]
-  (let [rolls-to-win-accross-all-games (map :rolls-to-win-counter games)       
-        sorted-rolls (sort rolls-to-win-accross-all-games)
-        minimum (first sorted-rolls)
-        maximum (last sorted-rolls)
-        average (/ (reduce + rolls-to-win-accross-all-games) (count rolls-to-win-accross-all-games))]
-    (update-in state [:rolls-to-win-counter] assoc :minimum minimum :maximum maximum :average average)))
+  (let [rolls-to-win-accross-all-games (map :rolls-to-win-counter games)
+        stats (find-min-max-average rolls-to-win-accross-all-games)]
+    (update-in state [:rolls-to-win-counter] (fn[_] stats))))
 
 (defn update-climb-distances [state games]
   (let [climbs-accross-all-games (flatten (map :climb-distances games))
-        sorted-climbs (sort climbs-accross-all-games)
-        minimum (first sorted-climbs)
-        maximum (last sorted-climbs)
-        average (/ (reduce + climbs-accross-all-games) (count climbs-accross-all-games))]
-    (update-in state [:climb-distances] assoc :minimum minimum :maximum maximum :average average)))
+        stats (find-min-max-average climbs-accross-all-games)]
+    (update-in state [:climb-distances] (fn [_] stats))))
 
 (defn update-slide-distances [state games]
   (let [climbs-accross-all-games (flatten (map :slide-distances games))
-        sorted-climbs (sort climbs-accross-all-games)
-        minimum (first sorted-climbs)
-        maximum (last sorted-climbs)
-        average (/ (reduce + climbs-accross-all-games) (count climbs-accross-all-games))]
-    (update-in state [:slide-distances] assoc :minimum minimum :maximum maximum :average average)))
+        stats (find-min-max-average climbs-accross-all-games)]
+    (update-in state [:slide-distances] (fn [_] stats))))
 
 (defn play-and-collect-stats [board rolls]
   (-> (core/play board rolls)
