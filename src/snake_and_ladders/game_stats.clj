@@ -44,4 +44,5 @@
                                    (reduce -)) (:slides game)))
    get-highest-climb
    get-highest-slide
-   (get-longest-turn game)))
+   (get-longest-turn game)
+   (assoc :lucky-rolls (:lucky-rolls game))))

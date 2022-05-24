@@ -37,4 +37,9 @@
             it produces game stats  on longest turn"
     (let [game example-finished-game
           result (produce-game-stats game)]
-      (is (= (:longest-turn result) [2])))))
+      (is (= (:longest-turn result) [2]))))
+  (testing "Given a finished game state
+            it produces game stats  on lucky rolls"
+    (let [game example-finished-game
+          result (produce-game-stats game)]
+      (is (= (:lucky-rolls result) 4)))))
