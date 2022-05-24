@@ -15,11 +15,15 @@
   x)
 
 (defn get-highest-climb [current-stats]
- (update-in current-stats [:highest-climb] (fn[_] (last (sort (:climb-distances current-stats))))))
+  (update-in current-stats [:highest-climb] (fn [_] (last (sort (:climb-distances current-stats))))))
+
+
+(defn get-highest-slide [current-stats]
+  (update-in current-stats [:highest-slide] (fn [_] (last (sort (:slide-distances current-stats))))))
 
 (defn produce-game-stats [game]
 
-   (->
+  (->
    initial-game-stats
    (assoc :rolls-to-win-counter (count (:turns game)))
    (assoc :climb-distances (mapv #(->>
@@ -29,4 +33,5 @@
    (assoc :slide-distances (mapv #(->>
                                    %
                                    (reduce -)) (:slides game)))
-   get-highest-climb))
+   get-highest-climb
+   get-highest-slide))

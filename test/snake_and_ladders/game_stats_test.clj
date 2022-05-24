@@ -27,4 +27,9 @@
             it produces game stats  on highest climb"
     (let [game example-finished-game
           result (produce-game-stats game)]
-      (is (= (:highest-climb result) 97)))))
+      (is (= (:highest-climb result) 97))))
+   (testing "Given a finished game state
+            it produces game stats  on highest slide"
+     (let [game example-finished-game
+           result (produce-game-stats game)]
+       (is (= (:highest-slide result) 1)))))
