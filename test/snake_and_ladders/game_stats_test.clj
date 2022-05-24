@@ -32,4 +32,9 @@
             it produces game stats  on highest slide"
      (let [game example-finished-game
            result (produce-game-stats game)]
-       (is (= (:highest-slide result) 1)))))
+       (is (= (:highest-slide result) 1))))
+  (testing "Given a finished game state
+            it produces game stats  on longest turn"
+    (let [game example-finished-game
+          result (produce-game-stats game)]
+      (is (= (:longest-turn result) [2])))))

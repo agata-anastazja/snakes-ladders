@@ -21,8 +21,17 @@
 (defn get-highest-slide [current-stats]
   (update-in current-stats [:highest-slide] (fn [_] (last (sort (:slide-distances current-stats))))))
 
-(defn produce-game-stats [game]
+(defn get-longest-turn [current-stats game]
+  (update-in current-stats [:longest-turn] 
+             (fn [_] (->>
+                      game
+                      :turns
+                      (reduce (fn[acc elem]
+                                (if (or (> (count elem)(count acc)) (and (= (count elem) (count acc))(> (reduce + elem) (reduce + acc))))
+                                        elem
+                                        acc)))))))
 
+(defn produce-game-stats [game]
   (->
    initial-game-stats
    (assoc :rolls-to-win-counter (count (:turns game)))
@@ -34,4 +43,5 @@
                                    %
                                    (reduce -)) (:slides game)))
    get-highest-climb
-   get-highest-slide))
+   get-highest-slide
+   (get-longest-turn game)))
