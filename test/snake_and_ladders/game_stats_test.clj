@@ -22,4 +22,10 @@
             it produces game stats  on distances on slides"
      (let [game example-finished-game
            result (produce-game-stats game)]
-       (is (= (:slide-distances result) [1 1 1])))))
+       (is (= (:slide-distances result) [1 1 1]))))
+  (testing "Given a finished game state
+            it produces game stats  on highest climb"
+    (let [game example-finished-game
+          result (produce-game-stats game)]
+      (is (= (:highest-climb result) 97))))
+  )
