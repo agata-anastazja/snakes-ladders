@@ -13,18 +13,17 @@
    :lucky-rolls {:minimum 0 :average 0 :maximum 0}})
 
 (defn update-rolls-to-win [state games]
-  (let [rolls-to-win-accross-all-games (map :rolls-to-win-counter games)
+  (let [rolls-to-win-accross-all-games (map :rolls-to-win-counter games)       
         sorted-rolls (sort rolls-to-win-accross-all-games)
         minimum (first sorted-rolls)
         maximum (last sorted-rolls)
         average (/ (reduce + rolls-to-win-accross-all-games) (count rolls-to-win-accross-all-games))]
-  (update-in state [:rolls-to-win-counter] assoc :minimum minimum :maximum maximum :average average)))
+    (update-in state [:rolls-to-win-counter] assoc :minimum minimum :maximum maximum :average average)))
 
 (defn play-and-collect-stats [board rolls]
   (-> (core/play board rolls)
       (game-stats/produce-game-stats)))
 
 (defn main [board rolls]
-  (let [game (play-and-collect-stats board (first rolls))
-        games [game]]
-     (update-rolls-to-win initial-stats games)))
+  (let [games (mapv #(play-and-collect-stats board %) rolls)]
+    (update-rolls-to-win initial-stats games)))
