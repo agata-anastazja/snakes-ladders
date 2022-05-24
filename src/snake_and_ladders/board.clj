@@ -1,7 +1,8 @@
-(ns snake-and-ladders.board)
+(ns snake-and-ladders.board
+  (:require [snake-and-ladders.config :as config]))
 
 (defn initialise-empty-board []
-  (vec (repeat 100 {})))
+  (vec (repeat config/board-size {})))
 
 (defn apply-snake [board snake]
   (update board (first snake) (fn [_] {:snake snake})))

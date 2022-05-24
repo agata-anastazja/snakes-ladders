@@ -19,15 +19,15 @@
                (update-in [:climbs] (fn [previous-climbs] (conj previous-climbs ladder))))))
 
 (defn update-position [state board roll]
-  (let [previous-tile (:current-position state)
-        attempted-tile (+ previous-tile roll)
-        tile (if (> attempted-tile 99)
-               previous-tile
-               attempted-tile)
-        has-field-modifier (not-empty (nth board tile))]
-    (if has-field-modifier
-      (apply-modifier state (nth board tile))
-      (update-in state [:current-position] (fn [_] tile)))))
+  (let [previous-square (:current-position state)
+        attempted-square (+ previous-square roll)
+        square (if (> attempted-square 99)
+                 previous-square
+                 attempted-square)
+        has-square-modifier (not-empty (nth board square))]
+    (if has-square-modifier
+      (apply-modifier state (nth board square))
+      (update-in state [:current-position] (fn [_] square)))))
 
 (defn make-move [state board roll]
   (->

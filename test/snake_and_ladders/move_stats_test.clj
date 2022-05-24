@@ -19,7 +19,7 @@
             when you got to 99 at the first atempt
             we keep track of the lucky roll"
     (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn[_] 1))
+          game-state (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 1))
           result  (count-if-lucky-roll game-state board)]
       (is (= (:lucky-rolls result) 1))))
   (testing "Given you reach position is 99
@@ -27,38 +27,37 @@
             we don't keep track of the lucky roll"
     (let [board (initialise-board [[4 1]] [[10 16]])
           game-state (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 0))
-          result  (count-if-lucky-roll game-state board )]
+          result  (count-if-lucky-roll game-state board)]
       (is (= (:lucky-rolls result) 0)))))
-  (testing "Given a game
+(testing "Given a game
             when we land on ladder
             we keep track of the lucky roll"
-    (let [board (initialise-empty-board)
-          game-state (stepped-on-ladder-game)
-          result  (count-if-lucky-roll game-state board )]
-      (is (= (:lucky-rolls result) 1))))
-  (testing "Given a game 
-            when we land one tile before the snake
+  (let [board (initialise-empty-board)
+        game-state (stepped-on-ladder-game)
+        result  (count-if-lucky-roll game-state board)]
+    (is (= (:lucky-rolls result) 1))))
+(testing "Given a game 
+            when we land one square before the snake
             we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[5 6]])
-          game-state (game-with-current-position 3)
-          result  (count-if-lucky-roll game-state board)]
-      (is (= (:lucky-rolls result) 1))))
+  (let [board (initialise-board [[4 1]] [[5 6]])
+        game-state (game-with-current-position 3)
+        result  (count-if-lucky-roll game-state board)]
+    (is (= (:lucky-rolls result) 1))))
 
-  (testing "Given a game
-            when we land two tiles after the snake
+(testing "Given a game
+            when we land two squares after the snake
             we keep track of the lucky roll"
-    (let [board (initialise-board [[4 1]] [[10 16]])
-          game-state (game-with-current-position 6)
-          result  (count-if-lucky-roll game-state board)]
-      (is (= (:lucky-rolls result) 1))))
+  (let [board (initialise-board [[4 1]] [[10 16]])
+        game-state (game-with-current-position 6)
+        result  (count-if-lucky-roll game-state board)]
+    (is (= (:lucky-rolls result) 1))))
 
 
-(deftest update-if-next-roll-can-be-strike-test 
+(deftest update-if-next-roll-can-be-strike-test
   (testing "Given a previous roll wasn't close enough to win in single roll
             when current position is at 93 
             next roll can be a lucky strike"
-    (let [
-          game-state (game-with-current-position-and-turns 94 [[91] [5] [3]])
+    (let [game-state (game-with-current-position-and-turns 94 [[91] [5] [3]])
           result (update-if-next-roll-can-be-strike game-state 92)]
       (is (= (:turns-in-strike-teritory result) 1))))
   (testing "Given a previous roll was close enough to win in single roll
@@ -73,5 +72,5 @@
   (testing "Given we have reached winning spot in one turn
             from when we could have reached it
             it's a lucky strike"
-   (let [game (update-in (game-with-current-position 99) [:turns-in-strike-teritory ] (fn [_] 1))] 
-     (is (= (lucky-strike? game) true)))))
+    (let [game (update-in (game-with-current-position 99) [:turns-in-strike-teritory] (fn [_] 1))]
+      (is (= (lucky-strike? game) true)))))

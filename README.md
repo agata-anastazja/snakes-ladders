@@ -1,6 +1,6 @@
 # snake-and-ladders
 
-This is a simulator for the game snake and ladders (also known as chutes and  ladders). The simulator can be run multiple times to find out various stats about the game. The  below sections provide details regarding the rules of the game, implementation constraints, and  the stats to be captured. 
+This is a simulator for the game snake and ladders (also known as chutes and  ladders) for a single player. The simulator can be run multiple times to find out various stats about the game. The  below sections provide details regarding the rules of the game, implementation constraints, and  the stats to be captured. 
 Game rules: 
 ● The game starts at position 0 which is outside the board and it finishes when a player  reaches the last square that is 100. 
 ● The player rolls a single 6 sided dice (die) numbered from 1 to 6 to move their token by  the number of squares indicated by the die rolled. 

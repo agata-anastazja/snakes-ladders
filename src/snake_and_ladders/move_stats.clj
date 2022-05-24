@@ -1,12 +1,12 @@
 (ns snake-and-ladders.move-stats
   (:require [snake-and-ladders.board :refer [find-snake-entrypoints]]))
 
-(defn distance-from-nearest-snakes-two-or-less [tile snake-entry-points]
+(defn distance-from-nearest-snakes-two-or-less [square snake-entry-points]
   (if (not-empty snake-entry-points)
-    (let [snake-after-selected-tile (first (filter (fn [x] (> x tile)) snake-entry-points))
-          snake-before-selected-tile  (first (filter (fn [x] (< x tile)) snake-entry-points))]
-      (or (and snake-after-selected-tile (<= (- snake-after-selected-tile tile) 2))
-          (and snake-before-selected-tile (<= (- tile snake-before-selected-tile) 2))))
+    (let [snake-after-selected-square (first (filter (fn [x] (> x square)) snake-entry-points))
+          snake-before-selected-square  (first (filter (fn [x] (< x square)) snake-entry-points))]
+      (or (and snake-after-selected-square (<= (- snake-after-selected-square square) 2))
+          (and snake-before-selected-square (<= (- square snake-before-selected-square) 2))))
     false))
 
 (defn miss-snake? [board current-position]
