@@ -33,3 +33,5 @@
           initial-game-state
           rolls))
 
+(defn play-games[games]
+  (map (fn[game](let [{:keys [board rolls]} game](play board rolls))) games))
