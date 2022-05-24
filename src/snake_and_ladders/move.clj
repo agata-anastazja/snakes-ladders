@@ -1,8 +1,9 @@
-(ns snake-and-ladders.move)
+(ns snake-and-ladders.move
+  (:require [snake-and-ladders.config :as config]))
 
 (defn update-turns [previous-turns roll]
   (let [last-turn (last previous-turns)
-        is-last-roll-six (= (last last-turn) 6)]
+        is-last-roll-six (= (last last-turn) config/dice-size)]
     (if is-last-roll-six
       (conj (pop previous-turns) (conj last-turn roll))
       (conj previous-turns [roll]))))
@@ -21,7 +22,7 @@
 (defn update-position [state board roll]
   (let [previous-square (:current-position state)
         attempted-square (+ previous-square roll)
-        square (if (> attempted-square 99)
+        square (if (> attempted-square config/winning-square-index)
                  previous-square
                  attempted-square)
         has-square-modifier (not-empty (nth board square))]

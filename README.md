@@ -16,6 +16,20 @@ to check it works run
 
 `lein test`
 
+## Running the code
+
+The entry method for the program is 
+
+## Architectural decisions
+
+I design this program as a single player game. For simplicity I decided that player is only represented as the position of their token on the board. 
+
+Within a game, we iterate through rolls until we reach a winning position - the last position on the board.
+
+Collecting game stats is decoupled from the game. The stats are calculated after the game is over, with the exception of lucky and lucky rolls which are accounted for after each move.
+
+If we are running multiple iterations of the game within a simulation, all we need to do is to pass the board, the number of times we want to run the game and a collection of rolls to complete the games.
+
 ## Game rules:
 
 - The game starts at position 0 which is outside the board and it finishes when a player reaches the last square that is 100.
@@ -106,7 +120,8 @@ A roll is lucky and unlucky if we land on a snake that is just next to another s
 I would
 
 - do rolls and board input validation
-- wrote a bit more tests around edge cases for game stats
+- wrote a bit more tests around edge cases for single game stats
+- clarify expected chaining behaviour - when you get from one modified to square to another, what should happen?
 
 ## License
 

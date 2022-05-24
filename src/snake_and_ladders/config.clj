@@ -12,3 +12,6 @@
 
 (def lucky-number-of-attempts-for-strike
   (env :lucky-number-of-attempts-for-strike 1))
+
+(def dice-size
+  (env :dice-size 6))
