@@ -1,7 +1,6 @@
 (ns snake-and-ladders.board-test
   (:require [clojure.test :refer :all]
-            [snake-and-ladders.board :refer :all]
-            ))
+            [snake-and-ladders.board :refer :all]))
 
 (deftest board-initialisation-test
   (testing "given the game is starting
@@ -49,7 +48,7 @@
             you can find all the snake entry points"
     (let [snakes [[4 3] [7 5] [10 8]]
           ladders [[2 5]]
-          board (initialise-board snakes ladders) 
+          board (initialise-board snakes ladders)
           result (find-snake-entrypoints board)
           expected-result [4 7 10]]
       (is (= result expected-result)))))
