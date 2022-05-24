@@ -37,17 +37,23 @@
                                   elem
                                   acc)))))))
 
+(defn get-climb-distances [game]
+  (mapv #(->>
+          %
+          reverse
+          (reduce -)) (:climbs game)))
+
+(defn get-slide-distances [game]
+  (mapv #(->>
+          %
+          (reduce -)) (:slides game)))
+
 (defn produce-game-stats [game]
   (->
    initial-game-stats
    (assoc :rolls-to-win-counter (count (flatten (:turns game))))
-   (assoc :climb-distances (mapv #(->>
-                                   %
-                                   reverse
-                                   (reduce -)) (:climbs game)))
-   (assoc :slide-distances (mapv #(->>
-                                   %
-                                   (reduce -)) (:slides game)))
+   (assoc :climb-distances (get-climb-distances game))
+   (assoc :slide-distances (get-slide-distances game))
    get-highest-climb
    get-highest-slide
    (get-longest-turn game)

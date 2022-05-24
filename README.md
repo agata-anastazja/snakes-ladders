@@ -18,7 +18,9 @@ to check it works run
 
 ## Running the code
 
-The entry method for the program is 
+The entry method for the program is the main method in main.clj
+
+It takes a board which is a vector of hashmaps, which can be snakes or ladders or empty and a vector of vectors of rolls, each inner vector representing a game.
 
 ## Architectural decisions
 

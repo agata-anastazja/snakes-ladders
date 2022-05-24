@@ -7,6 +7,8 @@
    [snake-and-ladders.resources.board :refer [board-with-snakes-and-ladders]]
    [snake-and-ladders.resources.finished-game :refer :all]))
 
+;; for reference - this is how stats look like for 2 games used in these tests
+
 (def first-game-stats
   {:rolls-to-win-counter 40 
    :climb-distances [0] 
@@ -16,6 +18,7 @@
    :longest-turn [6 4]
    :unlucky-rolls 3
    :lucky-rolls 9})
+
 (def second-game-stats 
    {:rolls-to-win-counter 32
     :climb-distances [28 10]
