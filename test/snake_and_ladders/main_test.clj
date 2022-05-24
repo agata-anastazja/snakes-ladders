@@ -69,7 +69,7 @@
           rolls-when-stepping-on-modifiers rolls-for-game-with-slides-and-climbs
           result (main board [rolls-when-stepping-on-modifiers rolls-for-an-easy-game])]
       (is (= (:climb-distances result)
-             {:minimum 0, :average 38/3, :maximum 28})))))
+             {:minimum 0, :maximum 38, :average 19})))))
 
 (deftest main-slide-distances-test
   (testing "Given board and a collection of rolls for a single game
@@ -79,7 +79,7 @@
           rolls rolls-for-game-with-slides-and-climbs
           result (main board [rolls])]
       (is (= (:slide-distances result)
-              {:minimum 9, :average 9, :maximum 9}))))
+              {:minimum 27, :average 27, :maximum 27}))))
   (testing "Given board and a collection of rolls for a two games
        when run the game
        gives you game stats across outcomes from both those games"
@@ -87,6 +87,22 @@
           rolls-when-stepping-on-modifiers rolls-for-game-with-slides-and-climbs
           result (main board [rolls-when-stepping-on-modifiers rolls-for-an-easy-game])]
       (is (= (:slide-distances result)
-              {:minimum 9, :average 9, :maximum 9})))))
+              {:minimum 0, :average 27/2, :maximum 27})))))
+
+(deftest main-highest-climb-test
+  (testing "Given board and a collection of rolls for a single game
+       when run the simulation
+       it gives you game stats for climb distances information"
+    (let [board board-with-snakes-and-ladders
+          rolls rolls-for-game-with-slides-and-climbs
+          result (main board [rolls])]
+      (is (= (:highest-climb result) 0))))
+  (testing "Given board and a collection of rolls for a two games
+       when run the game
+       gives you game stats across outcomes from both those games"
+    (let [board board-with-snakes-and-ladders
+          rolls-when-stepping-on-modifiers rolls-for-game-with-slides-and-climbs
+          result (main board [rolls-when-stepping-on-modifiers rolls-for-an-easy-game])]
+      (is (= (:highest-climb result) 28)))))
 
 
